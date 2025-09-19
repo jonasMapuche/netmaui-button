@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="net_maui_app_v24.ModalView"
+             xmlns:viewmodels="clr-namespace:net_maui_app_v24.ViewModels"
+             xmlns:models="clr-namespace:net_maui_app_v24.Models"
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="#00000000"
+             Title="ModalView">
+    <ContentPage.Content>
+        <Grid
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill">
+            <Grid
+                Padding="10, 0, 10, 0"
+                RowDefinitions="500, 5, 20, *">
+                <Grid
+                    Grid.Row="0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Grid
+                    Grid.Row="1">
+                    <BoxView
+                        BackgroundColor="Azure"
+                        CornerRadius="5"
+                        HeightRequest="10"/>
+                </Grid>
+                <Grid
+                    Grid.Row="2"
+                    BackgroundColor="Azure">
+                    <BoxView 
+                        BackgroundColor="Black" 
+                        CornerRadius="5" 
+                        WidthRequest="100" 
+                        HeightRequest="10" />
+                </Grid>
+                <Grid 
+                    Grid.Row="3"
+                    BackgroundColor="Azure">
+                    <CollectionView
+                        x:DataType="viewmodels:ModalViewModel"
+                        ItemsSource="{Binding BLEDevices}"
+                        Margin="5, 0, 5, 10">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate 
+                                x:DataType="models:DeviceBluetooth">
+                                <VerticalStackLayout 
+                                    Padding="5, 10">
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ModalViewModel}}, Path=BluetoothCommand}"      
+                                            CommandParameter="{Binding DeviceId}"/>
+                                    </VerticalStackLayout.GestureRecognizers>
+                                    <Label 
+                                        Text="{Binding Name}" 
+                                        FontSize="20"
+                                        TextColor="#01574f"
+                                        FontAttributes="Bold"/>
+                                    <Label 
+                                        Text="{Binding DeviceId}" 
+                                        FontSize="16" 
+                                        TextColor="#01574f"
+                                        FontAttributes="Italic"/>
+                                    <Label 
+                                        Text="{Binding Device}" 
+                                        FontSize="14" 
+                                        TextColor="#01574f"
+                                        FontAttributes="None"/>
+                                    <Label 
+                                        Text="{Binding NativeDevice}" 
+                                        FontSize="14" 
+                                        TextColor="#01574f"
+                                        FontAttributes="None"/>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
